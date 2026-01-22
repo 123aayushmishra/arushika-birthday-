@@ -7,8 +7,37 @@
     <style>
         body, html {
             margin: 0; padding: 0;
-            height: 100%; font-family: 'Poppins', sans-serif;
             background-color: #ffe4e1; overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Password Overlay Style */
+        #password-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #ff9a9e;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .pass-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        input {
+            padding: 10px;
+            border-radius: 10px;
+            border: 2px solid #ff4d6d;
+            margin: 10px 0;
+            width: 80%;
         }
 
         .page {
@@ -63,7 +92,17 @@
 </head>
 <body>
 
-    <div class="page active" id="page1">
+    <div id="password-overlay">
+        <div class="pass-card">
+            <h2 style="color: #ff4d6d;">Aru, answer this first! 🎀</h2>
+            <p>Mera fav car konsa hai with model?</p>
+            <input type="text" id="passInput" placeholder="Enter password here...">
+            <br>
+            <button class="btn" onclick="checkPassword()">Submit</button>
+        </div>
+    </div>
+
+    <div class="page" id="page1">
         <img src="your-photo.jpg" alt="Aru's Photo" class="photo-frame"> <h1>Happiest Birthday Arushika! 🎀</h1>
         <p>A small surprise for a very special person...</p>
         <button class="btn" onclick="nextPage(2)">Click to open surprise</button>
@@ -88,35 +127,9 @@
             <p>And uk If I were able to write my destiny again, I would write your name again and break the pen. You're my first female bestfriend, first love. The first girl whom I felt comfortable with. You're special arul, because everyone who knows me, knows You!</p>
             <p>You're the person I genuinely feel happy with. You're my home Aru and it feels really bad when I somewhere know that it'll be snatched from me.. I won't stop you from walking away if that's what your happiness lies in because for me it's the the thing that matters the most.</p>
             <p>But just know that I'll always love you, and I'll be proud of you! I want you to achieve everything you wished for. And please aise kabhi mat sochna ki you don't have anyone cause you'll always have me...</p>
-            </p>can't express how grateful I'm to have you
-in my life. You made me laugh when I was not even in the mood smiling
-You're my sunshine that brightens up my day and the stars that lights up my night
-Our relationship is a treasure that I cherish deeply with all my heart!!
-I'm so thankful to God to have you by my side aru
-Your kindness, your hardworking nature, your determination to make your parents proud and your love... it all inspire me to be a better person'
-Your voice, your sweet laughter your smile and your jokes it makes me smile and laugh like no one else!
-Your support and encouragement at times gives me the courage to chase my dreams and stay motivated... i still remember your words where you used to encourage me
-
-I love when you share your thoughts with me, it brings me a peace to know that you do trust me
-Uk it's amusing how I can be my true self around you, a personality no one knows exist except you
-Our moments are something that'll be forever engraved in my soul, the tears, the smiles, the laughter and the love we shared... it's precious to me You're more than just a person I love...
-You're my peace
-You're my home
-You're a person whom I can't live without, the mere thought of losing you shivers me to the core aru :)
-
-Anyways uk I'm kinda bad with words but today I want to express my feelings to you...
-</p>I'll start by saying thank you!!
-Thank You for coming into my life
-Thank you for making me laugh
-Thank you for making me smile
-Thank you for being understanding when
-even I wasn't able to understand myself
-Thank you for caring about me
-Thank you so much for being there
-Thank you for supporting me
-</p>I really appreciate your presence in my life
-You... you are a gem of a person aru, idk why others think you're selfish, rude or arrogant when you're nothing but a sweet
-kind soul
+            <p>can't express how grateful I'm to have you in my life. You made me laugh when I was not even in the mood smiling. You're my sunshine that brightens up my day and the stars that lights up my night. Our relationship is a treasure that I cherish deeply with all my heart!! I'm so thankful to God to have you by my side aru. Your kindness, your hardworking nature, your determination to make your parents proud and your love... it all inspire me to be a better person. Your voice, your sweet laughter your smile and your jokes it makes me smile and laugh like no one else! Your support and encouragement at times gives me the courage to chase my dreams and stay motivated... i still remember your words where you used to encourage me. I love when you share your thoughts with me, it brings me a peace to know that you do trust me. Uk it's amusing how I can be my true self around you, a personality no one knows exist except you. Our moments are something that'll be forever engraved in my soul, the tears, the smiles, the laughter and the love we shared... it's precious to me You're more than just a person I love... You're my peace. You're my home. You're a person whom I can't live without, the mere thought of losing you shivers me to the core aru :) Anyways uk I'm kinda bad with words but today I want to express my feelings to you...
+            </p>I'll start by saying thank you!! Thank You for coming into my life. Thank you for making me laugh. Thank you for making me smile. Thank you for being understanding when even I wasn't able to understand myself. Thank you for caring about me. Thank you so much for being there. Thank you for supporting me.
+            <p>I really appreciate your presence in my life. You... you are a gem of a person aru, idk why others think you're selfish, rude or arrogant when you're nothing but a sweet kind soul.</p>
             </div>
         <button class="btn" onclick="nextPage(4)">Ek aur cheez...</button>
     </div>
@@ -124,8 +137,7 @@ kind soul
     <div class="page" id="page4">
         <div class="letter-box">
             <p>Arushika sayad hum dobara na mile sayad hum fir se strangers ban jayenge pr itne sare happy memories ke liye thankyou so much or haa i hope in future hum vapas se mile pr is bar online nhi offline </p>
-            </p> Anyways
-            
+            <p> Anyways</p>
             <p> Aru! ✨</p>
             <p><b>Happy Birthday Once Again!</b></p>
         </div>
@@ -133,20 +145,31 @@ kind soul
     </div>
 
     <script>
+        // Password logic
+        function checkPassword() {
+            const pass = document.getElementById('passInput').value.toLowerCase().trim();
+            if (pass === "bmw m4") {
+                document.getElementById('password-overlay').style.display = 'none';
+                document.getElementById('page1').classList.add('active');
+            } else {
+                alert("Galat jawab! Phir se socho 😜");
+                document.getElementById('passInput').value = "";
+            }
+        }
+
+        // Navigation logic
         function nextPage(pageNumber) {
-            // Hide all pages
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
-            // Show current page
             document.getElementById('page' + pageNumber).classList.add('active');
         }
 
         function blowCandle() {
             const candle = document.getElementById('candle');
-            candle.innerHTML = "✨💨"; // Candle bujh gayi
+            candle.innerHTML = "✨💨"; 
             setTimeout(() => {
-                candle.innerHTML = "🎂"; // Cake aa gaya
+                candle.innerHTML = "🎂"; 
                 document.getElementById('nextAfterBlow').style.display = 'block';
                 alert("Yay! Happy Birthday Arushika! ❤️");
             }, 500);
